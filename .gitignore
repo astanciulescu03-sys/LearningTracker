@@ -1,0 +1,37 @@
+# --- Python / Flask backend ---
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+
+# Baza de date locala (date personale) - NU se versioneaza niciodata.
+# Se regenereaza automat la pornirea aplicatiei (db.create_all()).
+backend/instance/
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Node / React frontend ---
+node_modules/
+frontend/dist/
+dist/
+frontend/.vite/
+*.local
+
+# --- Secrete / configurare locala ---
+.env
+.env.*
+!.env.example
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+npm-debug.log*
