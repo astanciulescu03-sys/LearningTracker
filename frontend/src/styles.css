@@ -140,15 +140,71 @@ body {
   background: #fffbeb;
 }
 
-/* Course list & card */
-.course-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+/* Course list & card — randa orizontala cu scroll pe X, nu grid vertical.
+   Wrapper-ul "sparge" latimea maxima a lui .app si ocupa 80% din pagina
+   (viewport), centrat, indiferent de max-width-ul containerului parinte. */
+.course-list-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   margin: 20px 0;
+  width: 80vw;
+  max-width: 80vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.course-list {
+  /* --card-width e calculat si setat din JS (CourseList.jsx, cu
+     ResizeObserver) ca sa incapa mereu un numar INTREG de carduri in
+     latimea disponibila — fara nicio bucata de card taiata pe margine.
+     280px e doar valoarea de rezerva pentru primul randare, inainte sa
+     apuce JS sa masoare containerul. */
+  --card-gap: 16px;
+  flex: 1;
+  min-width: 0; /* esential ca overflow-x sa functioneze intr-un flex item */
+  display: flex;
+  gap: var(--card-gap);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+}
+
+.course-list__nav {
+  flex: 0 0 auto;
+  /* stick la mijlocul ecranului cat timp sectiunea cu carduri e vizibila,
+     dar fara sa iasa peste header/footer — clampat de inaltimea lui
+     .course-list-wrapper (parintele, care e cat cel mai inalt card) */
+  position: sticky;
+  top: 50vh;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.course-list__nav:hover {
+  background: var(--color-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .course-card {
+  flex: 0 0 var(--card-width, 280px);
+  width: var(--card-width, 280px);
+  scroll-snap-align: start;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
